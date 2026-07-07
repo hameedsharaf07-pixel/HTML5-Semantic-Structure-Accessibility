@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Semantic HTML5 & Accessibility Demo</title>
+  <style>
+    :root {
+      --text: #1a1a1a;
+      --bg: #ffffff;
+      --accent: #0b5fff;
+      --muted: #f4f5f7;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: system-ui, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      margin: 0;
+      line-height: 1.6;
+    }
+    /* Visually hide content but keep it available to screen readers */
+    .sr-only {
+      position: absolute;
+      width: 1px; height: 1px;
+      padding: 0; margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      white-space: nowrap;
+      border: 0;
+    }
+    /* Skip link becomes visible on keyboard focus */
+    .skip-link {
+      position: absolute;
+      top: -40px; left: 0;
+      background: var(--accent);
+      color: #fff;
+      padding: 8px 16px;
+      z-index: 100;
+      transition: top 0.2s;
+    }
+    .skip-link:focus { top: 0; }
+
+    header, nav, main, aside, footer { padding: 1.5rem; }
+    header { background: var(--muted); }
+    nav ul { list-style: none; display: flex; gap: 1.5rem; padding: 0; margin: 0; }
+    nav a { color: var(--accent); text-decoration: none; }
+    nav a:focus, a:focus, button:focus, input:focus {
+      outline: 3px solid var(--accent);
+      outline-offset: 2px;
+    }
+    main { display: grid; grid-template-columns: 3fr 1fr; gap: 2rem; }
+    article { grid-column: 1; }
+    aside { grid-column: 2; background: var(--muted); border-radius: 8px; }
+    figure { margin: 1rem 0; }
+    figcaption { font-size: 0.9rem; color: #555; }
+    footer { background: var(--muted); text-align: center; }
+    form div { margin-bottom: 1rem; }
+    label { display: block; font-weight: 600; margin-bottom: 0.25rem; }
+    input, textarea { width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; }
+    button {
+      background: var(--accent); color: #fff; border: none;
+      padding: 0.6rem 1.2rem; border-radius: 4px; cursor: pointer;
+    }
+    @media (max-width: 700px) {
+      main { grid-template-columns: 1fr; }
+      aside { grid-column: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Skip link: lets keyboard/screen-reader users bypass repeated nav -->
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <header>
+    <h1>Site Title</h1>
+    <nav aria-label="Primary">
+      <ul>
+        <li><a href="#main-content">Home</a></li>
+        <li><a href="#article-1">Articles</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <article id="article-1" aria-labelledby="article-heading">
+      <h2 id="article-heading">Why Semantic HTML Matters</h2>
+      <p>
+        Semantic elements like <code>&lt;header&gt;</code>, <code>&lt;nav&gt;</code>,
+        <code>&lt;main&gt;</code>, <code>&lt;article&gt;</code>, and
+        <code>&lt;footer&gt;</code> describe the <em>meaning</em> of content, not just
+        its appearance. This helps assistive technology build an accurate map of the page.
+      </p>
+
+      <figure>
+        <img src="https://placehold.co/600x300" alt="Diagram showing HTML5 semantic layout regions: header, nav, main, article, aside, footer">
+        <figcaption>Figure 1: A typical semantic page layout.</figcaption>
+      </figure>
+
+      <section aria-labelledby="form-heading">
+        <h3 id="form-heading">Accessible Contact Form</h3>
+        <form id="contact" novalidate>
+          <div>
+            <label for="name">Full name</label>
+            <input type="text" id="name" name="name" autocomplete="name" required aria-required="true">
+          </div>
+          <div>
+            <label for="email">Email address</label>
+            <input type="email" id="email" name="email" autocomplete="email" required aria-required="true"
+                   aria-describedby="email-hint">
+            <span id="email-hint" class="sr-only">We'll never share your email.</span>
+          </div>
+          <div>
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="4" required aria-required="true"></textarea>
+          </div>
+          <button type="submit">Send message</button>
+        </form>
+      </section>
+    </article>
+
+    <aside aria-labelledby="aside-heading">
+      <h2 id="aside-heading">Related Links</h2>
+      <ul>
+        <li><a href="https://www.w3.org/WAI/fundamentals/accessibility-intro/">Intro to Web Accessibility (W3C)</a></li>
+        <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element">MDN HTML Elements Reference</a></li>
+      </ul>
+    </aside>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Example Company. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
